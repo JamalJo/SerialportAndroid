@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.cupboard.cupboardhardware.MainActivity">
+
+    <Button
+        android:id="@+id/btn_usblist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="获取设备列表" />
+
+    <Button
+        android:id="@+id/btn_usb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="获取设备列表" />
+
+    <Button
+        android:id="@+id/btn_usbsend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送数据到USB设备" />
+
+    <Button
+        android:id="@+id/btn_seriallist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送数据到USB设备" />
+
+    <Button
+        android:id="@+id/btn_serialconfiguer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送数据到USB设备" />
+
+</LinearLayout>
