@@ -14,7 +14,7 @@
  * limitations under the License. 
  */
 
-package com.cupboard.serial;
+package android_serialport_api;
 
 import android.util.Log;
 

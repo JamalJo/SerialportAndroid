@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_seriallist).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: " + mSerialPortUtil.getAllSerialPort());
+//                mSerialPortUtil.openSerialPort();
+                Log.d(TAG, "SerialPortUtil "+mSerialPortUtil.getAllSerialPort());
             }
         });
     }

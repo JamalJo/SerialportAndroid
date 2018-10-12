@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import android_serialport_api.SerialPort;
+import android_serialport_api.SerialPortFinder;
+
 /**
  * @author by AllenJ on 2018/4/20.
  *
@@ -40,7 +43,7 @@ public class SerialPortUtil {
      */
     public void openSerialPort() {
         try {
-            serialPort = new SerialPort(new File("/dev/ttyS0"), 9600, 0);
+            serialPort = new SerialPort(new File("/dev/COM0"), 9600, 0);
             //调用对象SerialPort方法，获取串口中"读和写"的数据流
             inputStream = serialPort.getInputStream();
             outputStream = serialPort.getOutputStream();
@@ -89,8 +92,8 @@ public class SerialPortUtil {
     }
 
     private void getSerialPort() {
-        if (mReceiveThread == null) {
-
+        // TODO 注意回收线程
+        if (mReceiveThread == null || !mReceiveThread.isAlive()) {
             mReceiveThread = new ReceiveThread();
         }
         mReceiveThread.start();
