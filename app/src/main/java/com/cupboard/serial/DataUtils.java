@@ -17,16 +17,18 @@ public class DataUtils {
     //-------------------------------------------------------
     //Hex字符串转int
     public static int HexToInt(String inHex) {
+        // TODO 抛出异常
         return Integer.parseInt(inHex, 16);
     }
 
-    public static String IntToHex(int intHex){
+    public static String IntToHex(int intHex) {
         return Integer.toHexString(intHex);
     }
 
     //-------------------------------------------------------
     //Hex字符串转byte
     public static byte HexToByte(String inHex) {
+        // TODO 抛出异常
         return (byte) Integer.parseInt(inHex, 16);
     }
 
@@ -83,7 +85,6 @@ public class DataUtils {
      *
      * @param inputString 需要切割的源字符串
      * @param length      指定的长度
-     * @return
      */
     public static List<String> getDivLines(String inputString, int length) {
         List<String> divList = new ArrayList<>();

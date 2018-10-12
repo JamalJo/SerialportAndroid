@@ -25,7 +25,7 @@ public class SerialPortUtil {
     private ReceiveThread mReceiveThread = null;
     private boolean isStart = false;
 
-    private static final String TAG = "SerialPortUtil";
+    private static final String TAG = "jamaljo";
 
 
     public SerialPortUtil() {
@@ -43,7 +43,7 @@ public class SerialPortUtil {
      */
     public void openSerialPort() {
         try {
-            serialPort = new SerialPort(new File("/dev/COM0"), 9600, 0);
+            serialPort = new SerialPort(new File("/dev/COM2"), 9600, 0);
             //调用对象SerialPort方法，获取串口中"读和写"的数据流
             inputStream = serialPort.getInputStream();
             outputStream = serialPort.getOutputStream();

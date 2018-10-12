@@ -7,8 +7,10 @@ import android.view.View;
 
 import com.cupboard.serial.SerialPortUtil;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "jamaljo";
     SerialPortUtil mSerialPortUtil;
 
     @Override
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mSerialPortUtil = new SerialPortUtil();
+        mSerialPortUtil.openSerialPort();
         initView();
     }
 
@@ -23,8 +26,13 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_seriallist).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mSerialPortUtil.openSerialPort();
-                Log.d(TAG, "SerialPortUtil "+mSerialPortUtil.getAllSerialPort());
+                Log.d(TAG, "" + mSerialPortUtil.getAllSerialPort());
+            }
+        });
+        findViewById(R.id.btn_serialconfiguer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSerialPortUtil.sendSerialPort(new Date().getTime()+"");
             }
         });
     }
