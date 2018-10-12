@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import android_serialport_api.SerialPort;
 import android_serialport_api.SerialPortFinder;
 
+
 /**
  * @author by AllenJ on 2018/4/20.
  *
