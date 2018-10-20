@@ -31,9 +31,9 @@
         android:text="串口-列表查询" />
 
     <EditText
+        android:id="@+id/edit_serial"
         android:layout_width="400dp"
-        android:layout_height="200dp"
-        android:id="@+id/edit_serial"/>
+        android:layout_height="200dp" />
 
     <Button
         android:id="@+id/btn_serialsenddata"

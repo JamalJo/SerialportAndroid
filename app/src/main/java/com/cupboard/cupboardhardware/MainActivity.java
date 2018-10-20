@@ -3,12 +3,14 @@ package com.cupboard.cupboardhardware;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cupboard.CbUsb;
 import com.cupboard.CbUsbService;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private CbUsb mCbUsb;
 
     private Handler mHandler;
+    private String serialHistory = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +68,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    private String serialHistory = "";
 
     private void initPort() {
         mCbSerialPort = CbSerialPortService.newInstance();
@@ -104,10 +105,15 @@ public class MainActivity extends AppCompatActivity {
         btn_serial_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String text = mEditText.getText().toString().trim();
+                if (TextUtils.isEmpty(text) || text.length() % 2 != 0) {
+                    Toast.makeText(MainActivity.this,"无效数据",Toast.LENGTH_LONG).show();
+                    return;
+                }
                 //发送串口数据
                 try {
                     // 为能将字符正确转换为16进制，此处输入需为偶数个，即字符串字符需为为0~F
-                    byte[] bytes = CbByteUtils.hexStr2bytes(mEditText.getText().toString());
+                    byte[] bytes = CbByteUtils.hexStr2bytes(text);
                     // 建议给串口设备发送命令时，data写成类似如右：new byte[]{0x1B, 0x69, 0x00};
                     mCbSerialPort.send(bytes);
                 } catch (IOException e) {

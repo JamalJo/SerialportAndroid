@@ -27,39 +27,7 @@ import serial.utils.Logger;
 
 public class SerialPortFinder {
 
-    public class Driver {
-        private String mDriverName;
-        private String mDeviceRoot;
-        Vector<File> mDevices = null;
-
-        public Vector<File> getDevices() {
-            if (mDevices == null) {
-                mDevices = new Vector<File>();
-                File dev = new File("/dev");
-                File[] files = dev.listFiles();
-                int i;
-                for (i = 0; i < files.length; i++) {
-                    if (files[i].getAbsolutePath().startsWith(mDeviceRoot)) {
-                        Logger.debug(TAG, "Found new device: " + files[i]);
-                        mDevices.add(files[i]);
-                    }
-                }
-            }
-            return mDevices;
-        }
-
-        public Driver(String name, String root) {
-            mDriverName = name;
-            mDeviceRoot = root;
-        }
-
-        public String getName() {
-            return mDriverName;
-        }
-    }
-
     private static final String TAG = "SerialPort";
-
     private Vector<Driver> mDrivers = null;
 
     Vector<Driver> getDrivers() throws IOException {
@@ -121,5 +89,36 @@ public class SerialPortFinder {
             e.printStackTrace();
         }
         return devices.toArray(new String[devices.size()]);
+    }
+
+    public class Driver {
+        Vector<File> mDevices = null;
+        private String mDriverName;
+        private String mDeviceRoot;
+
+        public Driver(String name, String root) {
+            mDriverName = name;
+            mDeviceRoot = root;
+        }
+
+        public Vector<File> getDevices() {
+            if (mDevices == null) {
+                mDevices = new Vector<File>();
+                File dev = new File("/dev");
+                File[] files = dev.listFiles();
+                int i;
+                for (i = 0; i < files.length; i++) {
+                    if (files[i].getAbsolutePath().startsWith(mDeviceRoot)) {
+                        Logger.debug(TAG, "Found new device: " + files[i]);
+                        mDevices.add(files[i]);
+                    }
+                }
+            }
+            return mDevices;
+        }
+
+        public String getName() {
+            return mDriverName;
+        }
     }
 }
