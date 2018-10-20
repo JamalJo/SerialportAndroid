@@ -1,1 +1,1 @@
-include ':app', ':cbserialport', ':cbusb'
+include ':app'
