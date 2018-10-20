@@ -26,6 +26,8 @@ import java.io.OutputStream;
 
 import android.util.Log;
 
+import serial.utils.Logger;
+
 public class SerialPort {
 
 	private static final String TAG = "SerialPort";
@@ -60,7 +62,7 @@ public class SerialPort {
 
 		mFd = open(device.getAbsolutePath(), baudrate, flags);
 		if (mFd == null) {
-			Log.e(TAG, "native open returns null");
+			Logger.error(TAG, "native open returns null");
 			throw new IOException();
 		}
 		mFileInputStream = new FileInputStream(mFd);

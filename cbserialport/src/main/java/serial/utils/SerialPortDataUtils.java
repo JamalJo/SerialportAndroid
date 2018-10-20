@@ -1,4 +1,4 @@
-package com.cupboard.serial;
+package serial.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.List;
  * 串口数据转换工具类
  * Created by Administrator on 2016/6/2.
  */
-public class DataUtils {
+public class SerialPortDataUtils {
     //-------------------------------------------------------
     // 判断奇数或偶数，位运算，最后一位是1则为奇数，为0是偶数
     public static int isOdd(int num) {
@@ -127,13 +127,13 @@ public class DataUtils {
      * @return 结果
      */
     public static String sum(String cmd) {
-        List<String> cmdList = DataUtils.getDivLines(cmd, 2);
+        List<String> cmdList = SerialPortDataUtils.getDivLines(cmd, 2);
         int sumInt = 0;
         for (String c : cmdList) {
-            sumInt += DataUtils.HexToInt(c);
+            sumInt += SerialPortDataUtils.HexToInt(c);
         }
-        String sum = DataUtils.IntToHex(sumInt);
-        sum = DataUtils.twoByte(sum);
+        String sum = SerialPortDataUtils.IntToHex(sumInt);
+        sum = SerialPortDataUtils.twoByte(sum);
         cmd += sum;
         return cmd.toUpperCase();
     }
