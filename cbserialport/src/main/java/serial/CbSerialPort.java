@@ -12,6 +12,7 @@ public interface CbSerialPort {
 
     void open(@CbSerialPortConstants.SerialPortId String portId) throws IOException;
 
+    //可定制波特率
     void open(@CbSerialPortConstants.SerialPortId String portId,
             @CbSerialPortConstants.BaudRate int baudRate) throws IOException;
 

@@ -36,7 +36,7 @@ public class CbSerialPortService implements CbSerialPort {
         mSerialPortFinder = new SerialPortFinder();
     }
 
-    public static CbSerialPortService newInstance() {
+    public static CbSerialPort newInstance() {
         return new CbSerialPortService();
     }
 
@@ -114,7 +114,6 @@ public class CbSerialPortService implements CbSerialPort {
 
 
     private void initReceiverThread() {
-        // TODO 注意回收线程
         if (mReceiverThread != null && mReceiverThread.isAlive()) {
             Logger.debug(portId + "对应的接收线程已开启过了");
         } else {

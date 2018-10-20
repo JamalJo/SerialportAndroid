@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Created by zhoumao on 2018/10/20.
- * Description:
+ * Description:  提供给业务方的接口
  */
 
 public interface CbUsb {
@@ -16,4 +16,6 @@ public interface CbUsb {
     List<UsbDevice> getDeviceList();
 
     UsbManager getUsbManager();
+
+    void close() throws Exception;
 }
