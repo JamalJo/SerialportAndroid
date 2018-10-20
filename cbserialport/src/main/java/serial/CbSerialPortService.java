@@ -1,14 +1,14 @@
 package serial;
 
 import android.os.SystemClock;
-import android.serialport.SerialPort;
-import android.serialport.SerialPortFinder;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import android_serialport_api.SerialPort;
+import android_serialport_api.SerialPortFinder;
 import serial.utils.Logger;
 
 
