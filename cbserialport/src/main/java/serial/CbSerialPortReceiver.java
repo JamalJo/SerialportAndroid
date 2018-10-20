@@ -6,5 +6,5 @@ package serial;
  */
 
 public interface CbSerialPortReceiver {
-    void onReceive(byte[] data);
+    void onReceive(byte[] data, int size);
 }

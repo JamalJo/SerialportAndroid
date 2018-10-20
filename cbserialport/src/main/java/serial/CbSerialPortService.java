@@ -1,12 +1,14 @@
 package serial;
 
+import android.os.SystemClock;
+import android.serialport.SerialPort;
+import android.serialport.SerialPortFinder;
+
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 
-import android_serialport_api.SerialPort;
-import android_serialport_api.SerialPortFinder;
 import serial.utils.Logger;
 
 
@@ -23,7 +25,7 @@ public class CbSerialPortService implements CbSerialPort {
     String portId;
     private SerialPort serialPort = null;
     private SerialPortFinder mSerialPortFinder;
-    private InputStream inputStream = null;
+    private BufferedInputStream inputStream = null;
     private OutputStream outputStream = null;
     private ReceiverThread mReceiverThread = null;
     private boolean isStart = false;
@@ -54,7 +56,7 @@ public class CbSerialPortService implements CbSerialPort {
         this.portId = portId;
         serialPort = new SerialPort(new File(portId), 9600, 0);
         //调用对象SerialPort方法，获取串口中"读和写"的数据流
-        inputStream = serialPort.getInputStream();
+        inputStream = new BufferedInputStream(serialPort.getInputStream());
         outputStream = serialPort.getOutputStream();
         isStart = true;
         initReceiverThread();
@@ -69,7 +71,7 @@ public class CbSerialPortService implements CbSerialPort {
             @CbSerialPortConstants.BaudRate int baudRate) throws IOException {
         serialPort = new SerialPort(new File(portId), baudRate, 0);
         //调用对象SerialPort方法，获取串口中"读和写"的数据流
-        inputStream = serialPort.getInputStream();
+        inputStream = new BufferedInputStream(serialPort.getInputStream());
         outputStream = serialPort.getOutputStream();
         isStart = true;
         initReceiverThread();
@@ -83,7 +85,7 @@ public class CbSerialPortService implements CbSerialPort {
     @Override
     public void send(byte[] data) throws IOException {
         outputStream.write(data);
-        outputStream.flush();
+//        outputStream.flush();
     }
 
     @Override
@@ -133,11 +135,17 @@ public class CbSerialPortService implements CbSerialPort {
                 if (inputStream == null) {
                     return;
                 }
-                byte[] readData = new byte[1024];
                 try {
-                    int size = inputStream.read(readData);
-                    if (size > 0 && receiver != null) {
-                        receiver.onReceive(readData);
+                    int available = inputStream.available();
+                    if (available > 0) {
+                        byte[] readData = new byte[1024];
+                        int size = inputStream.read(readData);
+                        if (size > 0 && receiver != null) {
+                            receiver.onReceive(readData, size);
+                        }
+                    } else {
+                        // 暂停一点时间，免得一直循环造成CPU占用率过高
+                        SystemClock.sleep(1);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

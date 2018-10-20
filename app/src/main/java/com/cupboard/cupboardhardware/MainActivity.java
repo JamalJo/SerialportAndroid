@@ -27,7 +27,8 @@ import serial.CbSerialPort;
 import serial.CbSerialPortConstants;
 import serial.CbSerialPortReceiver;
 import serial.CbSerialPortService;
-import serial.utils.SerialPortDataUtils;
+import serial.utils.CbByteUtils;
+import serial.utils.CbTimeUtil;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "jamaljo";
@@ -65,19 +66,24 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(this);
     }
 
+    private String serialHistory = "";
+
     private void initPort() {
         mCbSerialPort = CbSerialPortService.newInstance();
         try {
             mCbSerialPort.open(CbSerialPortConstants.PORT2);
             mCbSerialPort.setReceiver(new CbSerialPortReceiver() {
                 @Override
-                public void onReceive(final byte[] response) {
-                    Log.d(TAG, "onReceive: " + SerialPortDataUtils.ByteArrToHex(response));
+                public void onReceive(final byte[] response, final int size) {
+                    //接收串口数据
+                    Log.d(TAG, "onReceive: " + CbByteUtils.bytes2HexStr(response));
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            txt_show.setText(
-                                    "串口收到的数据： " + SerialPortDataUtils.ByteArrToHex(response));
+                            serialHistory = serialHistory + CbTimeUtil.currentTime()
+                                    + CbByteUtils.bytes2HexStr(
+                                    response, 0, size) + "\n";
+                            txt_show.setText(serialHistory);
                         }
                     });
                 }
@@ -88,9 +94,9 @@ public class MainActivity extends AppCompatActivity {
         btn_listserial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String serials="";
-                for(String serial:mCbSerialPort.getAllPortName()){
-                    serials=serials+"   |  "+serial;
+                String serials = "";
+                for (String serial : mCbSerialPort.getAllPortName()) {
+                    serials = serials + "   |  " + serial;
                 }
                 txt_show.setText("所有串口名： " + serials);
             }
@@ -98,8 +104,10 @@ public class MainActivity extends AppCompatActivity {
         btn_serial_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //发送串口数据
                 try {
-                    mCbSerialPort.send(SerialPortDataUtils.HexToByteArr("010100000000FFFF"));
+                    byte[] bytes = CbByteUtils.hexStr2bytes("abcd");
+                    mCbSerialPort.send(bytes);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
