@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * 串口数据转换工具类
- * Created by Administrator on 2016/6/2.
+ * Created by zhoumao on 2018/10/20.
  */
 public class SerialPortDataUtils {
     //-------------------------------------------------------

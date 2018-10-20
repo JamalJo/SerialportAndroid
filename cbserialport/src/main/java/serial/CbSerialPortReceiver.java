@@ -2,7 +2,7 @@ package serial;
 
 /**
  * Created by zhoumao on 2018/10/20.
- * Description:
+ * Description: 串口接收器
  */
 
 public interface CbSerialPortReceiver {

@@ -30,8 +30,12 @@ public class CbSerialPortService implements CbSerialPort {
     private CbSerialPortReceiver receiver;
 
 
-    public CbSerialPortService() {
+    private CbSerialPortService() {
         mSerialPortFinder = new SerialPortFinder();
+    }
+
+    public static CbSerialPortService newInstance() {
+        return new CbSerialPortService();
     }
 
 

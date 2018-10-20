@@ -12,9 +12,9 @@ import java.lang.annotation.RetentionPolicy;
  */
 
 public class CbSerialPortConstants {
-    public final static String PORT1 = "/dev/COM1";
-    public final static String PORT2 = "/dev/COM2";
-    public final static String PORT3 = "/dev/COM3";
+    public final static String PORT1 = "/dev/COM1";   //MXC1
+    public final static String PORT2 = "/dev/COM2";   //MXC2
+    public final static String PORT3 = "/dev/COM3";   //MXC3
 
     public final static int BAUD9600 = 9600;
 

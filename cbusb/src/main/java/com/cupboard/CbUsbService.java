@@ -7,8 +7,6 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,19 +18,22 @@ import java.util.List;
  * Description:
  */
 
-public class UsbHandler {
+public class CbUsbService implements CbUsb {
 
     private Context mContext;
     private UsbManager mUsbManager;
 
-    private UsbHandler() {
+    private CbUsbService() {
     }
 
-    public UsbHandler(Context context) {
+    private CbUsbService(Context context) {
         mContext = context;
         this.mUsbManager = (UsbManager) mContext.getSystemService(Context.USB_SERVICE);
     }
 
+    public static CbUsbService newInstance(Context context) {
+        return new CbUsbService(context);
+    }
 
     public UsbManager getUsbManager() {
         return mUsbManager;
@@ -51,8 +52,6 @@ public class UsbHandler {
     }
 
     /**
-     * mVendorId=1137,mProductId=85  佳博 3150T 标签打印机
-     *
      * @param vendorId  厂商ID
      * @param productId 产品ID
      * @return device
@@ -63,11 +62,10 @@ public class UsbHandler {
         while (deviceIterator.hasNext()) {
             UsbDevice device = deviceIterator.next();
             if (device.getVendorId() == vendorId && device.getProductId() == productId) {
-                Log.e("USBUtil", "getDeviceList: " + device.getDeviceName());
                 return device;
             }
         }
-        Toast.makeText(mContext, "没有对应的设备", Toast.LENGTH_SHORT).show();
+        Logger.error("没有对应的设备");
         return null;
     }
 
@@ -75,12 +73,12 @@ public class UsbHandler {
     /**
      * 判断对应 USB 设备是否有权限
      */
-    public boolean hasPermission(UsbDevice device) {
+    private boolean hasPermission(UsbDevice device) {
         return mUsbManager.hasPermission(device);
     }
 
 
-    public boolean openPort(UsbDevice device) {
+    private boolean openPort(UsbDevice device) {
         //获取设备接口，一般只有一个，多个的自己研究去
         UsbInterface usbInterface = device.getInterface(0);
 
@@ -93,14 +91,14 @@ public class UsbHandler {
                 return false;
             }
             if (usbConnection.claimInterface(usbInterface, true)) {
-                Toast.makeText(mContext, "找到 USB 设备接口", Toast.LENGTH_SHORT).show();
+                Logger.error("找到 USB 设备接口");
             } else {
                 usbConnection.close();
-                Toast.makeText(mContext, "没有找到 USB 设备接口", Toast.LENGTH_SHORT).show();
+                Logger.error("没有找到 USB 设备接口");
                 return false;
             }
         } else {
-            Toast.makeText(mContext, "没有 USB 权限", Toast.LENGTH_SHORT).show();
+            Logger.error("没有 USB 权限");
             return false;
         }
 

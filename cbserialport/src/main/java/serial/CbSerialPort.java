@@ -4,7 +4,7 @@ import java.io.IOException;
 
 /**
  * Created by zhoumao on 2018/10/20.
- * Description:
+ * Description: 串口相关操作函数的接口
  */
 
 public interface CbSerialPort {
