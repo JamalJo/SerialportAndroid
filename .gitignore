@@ -10,6 +10,5 @@ gradle/
 gradlew.bat
 gradlew
 .gradle/
-libs/
 src/main/java/com/
 src/main/res/drawable/
